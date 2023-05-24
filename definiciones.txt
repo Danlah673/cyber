@@ -1,0 +1,52 @@
+•  Hacker:
+	• Persona con grandes habilidades en el manejo de computadoras que 
+	 investiga un sistema informático para avisar de los fallos y 
+	 desarrollar técnicas de mejora.
+• Pirata informático:
+	• Persona que accede ilegalmente a sistemas informáticos ajenos para 
+	 apropiárselos u obtener información secreta.
+• Ciberdelincuente:
+	• Persona que realiza actividades delictivas tales como robar 
+	 información, acceder a redes privadas, estafas, etc. 
+• Zero-Day
+	• Se refieren a las vulnerabilidades que pueden ser explotadas antes de 
+	 que el desarrollador las identifique y/o libere un parche para eliminar 
+	 dicha vulnerabilidad.
+• Exploit
+	• Fragmento de software, datos, comandos o acciones que aprovechan 
+	 una vulnerabilidad en un sistema con el fin de obtener un 
+	 comportamiento no deseado.
+• Doxing
+	• Practica que consiste en investigar y publicar información sobre un 
+	 individuo u organización.
+• Payload
+	• El payload o carga útil, es la sección o parte de un código que causa 
+	 acciones potencialmente dañinas como podría ser la explotación de 
+	 vulnerabilidades entre las que se pueden encontrar el robo de 
+	 información, el secuestro de sesión.
+• Pentest
+	• Auditoria o test de intrusión. Es el procedimiento a partir del cual se 
+	 detectan vulnerabilidades en un sistema siempre de forma autorizada 
+	 y se reportan. Pueden ser de caja blanca, de caja negra o de caja gris.
+• APT
+	• Amenaza persistente avanzada. 
+	• Difíciles de detectar
+	• Ataques precisos y bien medidos
+	• Conocimiento técnico muy elevado
+
+Fases de un pentest
+	• Recopilación de información : Se realiza una fase de obtención de 
+	 información sobre el sistema que se desea auditar.
+		• Recopilación de información de forma pasiva : FootPrinting
+		• Recopilación de información de forma activa : FingerPrinting
+	• Búsqueda/análisis de vulnerabilidades
+		• En esta fase se analiza todo lo recogido anteriormente.
+	• Explotación de vulnerabilidades
+		• Fase en la que se intenta conseguir acceso a los sistemas objetivo.
+		• Realización de ataques con el fin de extraer mas información.
+	• Post-explotación
+		• se intenta llegar lo mas lejos posible en el sistema 
+		vulnerado.
+		• Escaladas de privilegios
+	• Elaboración del informe.
+
