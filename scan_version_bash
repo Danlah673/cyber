@@ -1,0 +1,133 @@
+#!/bin/bash
+
+
+scan_menu(){
+
+scan_choice=$(whiptail --title "Choose an option" --menu "Which scan do you want to do ?" 30 45 15 \
+"ACK scan" "" \
+"SYN scan" "" \
+"Intense scan" "" \
+"Tout" "" \
+"Total" "" \
+3>&1 1>&2 2>&3)
+
+target=$(whiptail --inputbox "Write the target name" 8 78 --title "What is the target ?" 3>&1 1>&2 2>&3)
+result_file=$(whiptail --inputbox "Write the file name" 8 78 --title "In which file put the result ?" 3>&1 1>&2 2>&3)
+
+case $scan_choice in
+	"ACK scan")
+	sudo nmap -sA -T4 $target | grep 'All 1000' >> $result_file
+	;;
+	"SYN scan")
+	sudo nmap -sS -T4 $target | grep -E 'PORT|^[0-9]{1,}|^Not[[:space:]]shown' >> $result_file
+	;;
+	"Intense scan")
+	sudo nmap -T4 -A -v $target | grep -E '^Not[[:space:]]shown|PORT|^[0-9]{1,}/tcp|^TRACEROUTE|^HOP|ms|Agressice[[:space:]]OS[[:space:]]guesses' >> $result_file
+	;;
+	"Tout")
+	echo "-------------------------------------------------------------------------------" >>$result_file
+	echo "ACK scan :" >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+	sudo nmap -sA -T4 $target | grep 'All 1000' >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+	echo "" >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+	echo "SYN scan :" >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+	sudo nmap -sS -T4 $target | grep -E 'PORT|^[0-9]{1,}|^Not[[:space:]]shown' >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+	echo "" >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+	echo "Intense scan :" >>$result_file
+	sudo nmap -T4 -A -v $target | grep -E '^Not[[:space:]]shown|PORT|^[0-9]{1,}/tcp|^TRACEROUTE|^HOP|ms|Agressice[[:space:]]OS[[:space:]]guesses' >> $result_file
+	;;
+	"Total")
+	echo "-------------------------------------------------------------------------------" >>$result_file
+        echo "ACK scan :" >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+        sudo nmap -sA -T4 $target | grep 'All 1000' >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+        echo "" >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+        echo "SYN scan :" >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+        sudo nmap -sS -T4 $target | grep -E 'PORT|^[0-9]{1,}|^Not[[:space:]]shown' >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+        echo "" >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+        echo "Intense scan :" >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+        sudo nmap -T4 -A -v $target | grep -E '^Not[[:space:]]shown|PORT|^[0-9]{1,}/tcp|^TRACEROUTE|^HOP|ms|Agressice[[:space:]]OS[[:space:]]guesses' >> $result_file
+        echo "-------------------------------------------------------------------------------" >>$result_file
+	echo "" >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+	echo "UDP scan :" >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+	sudo nmap -sU -T4 -v $target | grep -E 'All 1000' >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+	echo "" >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+        echo "Traceroute" >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+        sudo traceroute $target >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+        echo "" >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+        echo "WHOis" >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+        sudo whois $target >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+	echo "" >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+	echo "nslookup" >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+	sudo nslookup $target >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+	echo "" >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+	echo "Don't forget to use tools as Shodan or dnsdumspter or also WHOis.net" >> $result_file
+	echo "-------------------------------------------------------------------------------" >>$result_file
+        ;;
+esac
+}
+
+clean_menu(){
+clean_choice=$(whiptail --title "Choose an option" --menu "Which type of output scan ?" 10 45 3 \
+"ACK scan" "" \
+"SYN scan" "" \
+"Intense scan" "" 3>&1 1>&2 2>&3)
+
+clean_file=$(whiptail --inputbox "Write the name file" 8 78 --title "Which file to clean ?" 3>&1 1>&2 2>&3)
+new_file=$(whiptail --inputbox "Write the name file" 8 78 --title "In which file to put the result" 3>&1 1>&2 2>&3)
+case $clean_choice in
+	"ACK scan")
+	grep 'All 1000'  $clean_file >> $new_file
+	;;
+	"SYN scan")
+	grep -E 'PORT|^[0-9]{1,}|^Not[[:space:]]shown' $clean_file >> $new_file
+	;;
+	"Intense scan")
+	grep -E '^Not[[:space:]]shown|PORT|^[0-9]{1,}/tcp|^TRACEROUTE|^HOP|ms|Agressice[[:space:]]OS[[:space:]]guesses' $clean_file >> $new_file
+	;;
+esac
+
+}
+
+first_menu(){
+first_choice=$(whiptail --title "Menu" --menu "Choose an option" 10 45 3 \
+"Do a scan" "" \
+"Clean an output scan" "" 3>&1 1>&2 2>&3)
+
+case $first_choice in
+	"Do a scan")
+		scan_menu
+	;;
+	"Clean an output scan")
+		clean_menu
+	;;
+esac
+}
+
+
+whiptail --title "Information" --msgbox "Please strat this application with root or sudo privileges" 8 78
+first_menu
