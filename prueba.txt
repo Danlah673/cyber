@@ -1,0 +1,78 @@
+
+
+-----------------------------------------------------------------
+| Opcionalmente, la característica date.timezone en php.ini	|
+| puede ser modificada para asegurar que los Logs están a la	|
+| hora correcta.						|
+|								|
+|	nano /etc/php.ini > date.timezone = Europe/Madrid	|
+|								|
+-----------------------------------------------------------------
+
+
+-----------------------------------------------------------------
+|								|
+| Nos aseguramos de que los servidores Apache y Ossec 		|
+| funcionan correctamente : 					|
+|								|
+| systemctl restart ossec					|
+| systemctl restart httpd					|
+|								|
+-----------------------------------------------------------------
+
+
+-----------------------------------------------------------------
+|								|
+| Modificamos la configuración del servidor ossec para permitir	|
+| la conexión con los agentes :					|
+|								|
+|	gedit /var/ossec/etc/ossec.conf				|
+|								|
+|	<remote>						|
+|		<connection>secure</connection>			|
+|		<port>1514</port>				|
+|		<allowed-ips>network/24</allowed-ips>		|
+|		<local_ip>centosIP</local_ip>			|
+|	</remote>						|
+|								|
+-----------------------------------------------------------------
+
+
+-----------------------------------------------------------------
+|								|
+| Se reinicia el servidor :					|
+|								|
+|	/var/ossec/bin/ossec-control start			|
+|	/var/ossec/bin/ossec-control restart			|
+|								|
+-----------------------------------------------------------------
+
+
+-----------------------------------------------------------------
+|								|
+| Se crea el agente en el servidor:				|
+|								|
+|	/var/ossec/bin/manage_agente				|
+|								|
+| Se recupera la clave para insertar la en el cliente de la 	|
+| maquina Windows.						|
+|								|
+| Una vez que el cliente esta listo, se reinicia el servicio: 	|
+|								|
+|	/var/ossec/bin/ossec-remoted restart			|
+|								|
+-----------------------------------------------------------------
+
+
+-----------------------------------------------------------------
+|								|
+| Se controla que el agente esta activado con:			|
+|								|
+|	/var/ossec/bin/agent_control -l				|
+|								|
+| A partir de este momento, el agente esta visible en el WUI.	|
+|								|
+-----------------------------------------------------------------
+
+
+
